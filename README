@@ -5,7 +5,7 @@ Usage:
 	robots = Robots.new "Some User Agent"
 	assert robots.allowed?("http://www.yelp.com/foo")
 	assert !robots.allowed?("http://www.yelp.com/mail?foo=bar")
-	robots.other_values # gets misc. key/values (i.e. sitemaps)
+	robots.other_values("http://foo.com") # gets misc. key/values (i.e. sitemaps)
 	
 If you want caching, you're on your own.  I suggest marshalling an instance of the parser.  
 
