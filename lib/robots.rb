@@ -92,6 +92,13 @@ class Robots
     @parsed[host] ||= ParsedRobots.new(uri)
     @parsed[host].allowed?(uri, @user_agent)
   end
+  
+  def other_values(uri)
+    uri = URI.parse(uri.to_s) unless uri.is_a?(URI)
+    host = uri.host
+    @parsed[host] ||= ParsedRobots.new(uri)
+    @parsed[host].other_values
+  end
 end
 
 if __FILE__ == $0
