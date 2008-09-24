@@ -3,9 +3,10 @@ require "uri"
 class Robots
   class ParsedRobots
     def initialize(uri)
-      io = open(URI.join(uri.to_s, "/robots.txt"))
-      return if io.content_type != "text/plain"
-      return if io.status != ["200", "OK"]
+      io = open(URI.join(uri.to_s, "/robots.txt")) rescue nil
+      if !io || io.content_type != "text/plain" || io.status != ["200", "OK"]
+        io = StringIO.new("User-agent: *\nAllow: /\n")
+      end
 
       @other = {}
       @disallows = {}
