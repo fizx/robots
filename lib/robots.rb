@@ -1,7 +1,13 @@
 require "open-uri"
 require "uri"
+require "rubygems"
+require "loggable"
 class Robots
+  include Loggable
+  
   class ParsedRobots
+    include Loggable
+    
     def initialize(uri)
       io = open(URI.join(uri.to_s, "/robots.txt")) rescue nil
       if !io || io.content_type != "text/plain" || io.status != ["200", "OK"]
@@ -38,14 +44,14 @@ class Robots
       return true unless @parsed
       allowed = true
       path = uri.request_uri
-      puts "path: #{path}"
+      debug "path: #{path}"
       
       @disallows.each do |key, value|
         if user_agent =~ key
-          puts "matched #{key.inspect}"
+          debug "matched #{key.inspect}"
           value.each do |rule|
             if path =~ rule
-              puts "matched Disallow: #{rule.inspect}"
+              debug "matched Disallow: #{rule.inspect}"
               allowed = false
             end
           end
@@ -56,10 +62,10 @@ class Robots
       
       @allows.each do |key, value|
         if user_agent =~ key
-          puts "matched #{key.inspect}"
+          debug "matched #{key.inspect}"
           value.each do |rule|
             if path =~ rule
-              puts "matched Allow: #{rule.inspect}"
+              debug "matched Allow: #{rule.inspect}"
               return true 
             end
           end
@@ -100,15 +106,4 @@ class Robots
     @parsed[host] ||= ParsedRobots.new(uri)
     @parsed[host].other_values
   end
-end
-
-if __FILE__ == $0
-  require "test/unit"
-  class RobotsTest < Test::Unit::TestCase 
-    def test_robots
-      robots = Robots.new "Ruby-Robot.txt Parser Test Script"
-      assert robots.allowed?("http://www.yelp.com/foo")
-      assert !robots.allowed?("http://www.yelp.com/mail?foo=bar")
-    end
-  end  
 end

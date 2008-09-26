@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name     = "robots"
-  s.version  = "0.2.0"
+  s.version  = "0.3.0"
   s.date     = "2008-08-10"
   s.summary  = "Simple robots.txt parser"
   s.email    = "kyle@kylemaxwell.com"
@@ -11,4 +11,5 @@ Gem::Specification.new do |s|
   s.files    = ["README", "lib/robots.rb"]
   s.rdoc_options = ["--main", "README"]
   s.extra_rdoc_files = ["README"]
+  s.add_dependency("fizx-loggable", ["> 0.0.0"])
 end

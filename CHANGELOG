@@ -1,3 +1,5 @@
+0.3.0
+  - added loggable dependency 
 0.2.0
 	- IF robot.txt 404s, assume allowed.
   - Added CHANGELOG
