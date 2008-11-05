@@ -32,8 +32,8 @@ class Robots
           @disallows[agent] ||= []
           @disallows[agent] << to_regex(value)
         else
-          @disallows[key] ||= []
-          @disallows[key] << value
+          @disallows[agent] ||= []
+          @disallows[agent] << to_regex(value)
         end
       end
       

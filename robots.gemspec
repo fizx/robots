@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name     = "robots"
-  s.version  = "0.3.0"
+  s.version  = "0.3.1"
   s.date     = "2008-08-10"
   s.summary  = "Simple robots.txt parser"
   s.email    = "kyle@kylemaxwell.com"

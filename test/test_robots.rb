@@ -2,6 +2,20 @@
 require "test/unit"
 require File.dirname(__FILE__) + "/../lib/robots"
 
+module Kernel
+  alias_method :open_old, :open
+  
+  def set_open(key, value)
+    @fake_open_values ||= {}
+    @fake_open_values[key] = value
+  end
+  
+  def open(*args)
+    @fake_open_values ||= {}
+    @fake_open_values[args.first] || open_old(*args)
+  end
+end
+
 class TestRobots < Test::Unit::TestCase
   def setup
     @robots = Robots.new "Ruby-Robot.txt Parser Test Script"
@@ -11,8 +25,12 @@ class TestRobots < Test::Unit::TestCase
     assert @robots.allowed?("http://www.yahoo.com")
   end
   
-  def test_
+  def test_other
     assert @robots.allowed?("http://www.yelp.com/foo")
     assert !@robots.allowed?("http://www.yelp.com/mail?foo=bar")
+  end
+  
+  def test_site_with_disallowed
+    assert @robots.allowed?("http://www.google.com/")
   end
 end

@@ -1,3 +1,6 @@
+0.3.1
+  - fixed bug in disallows handling
+  - partially mocked out open-uri
 0.3.0
   - added loggable dependency 
 0.2.0
