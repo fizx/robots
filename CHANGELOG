@@ -1,3 +1,5 @@
+0.3.2
+	- fixed breaking on reddit.com
 0.3.1
   - fixed bug in disallows handling
   - partially mocked out open-uri

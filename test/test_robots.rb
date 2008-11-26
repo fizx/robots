@@ -25,6 +25,10 @@ class TestRobots < Test::Unit::TestCase
     assert @robots.allowed?("http://www.yahoo.com")
   end
   
+  def test_reddit
+    assert @robots.allowed?("http://reddit.com")
+  end
+  
   def test_other
     assert @robots.allowed?("http://www.yelp.com/foo")
     assert !@robots.allowed?("http://www.yelp.com/mail?foo=bar")

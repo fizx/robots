@@ -17,7 +17,7 @@ class Robots
       @other = {}
       @disallows = {}
       @allows = {}
-      agent = ""
+      agent = /.*/
       io.each do |line|
         next if line =~ /^\s*(#.*|$)/
         key, value = line.split(":")
@@ -45,8 +45,11 @@ class Robots
       allowed = true
       path = uri.request_uri
       debug "path: #{path}"
-      
+      puts "--------"
+      puts @disallows.inspect
+      puts "--------"
       @disallows.each do |key, value|
+        puts ">>>>>>>#{key.inspect}<<<<<<<<"
         if user_agent =~ key
           debug "matched #{key.inspect}"
           value.each do |rule|
