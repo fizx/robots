@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
-  s.name     = "robots"
-  s.version  = "0.3.1"
-  s.date     = "2008-08-10"
+  s.name     = "fizx-robots"
+  s.version  = "0.4.0"
+  s.date     = "2008-12-10"
   s.summary  = "Simple robots.txt parser"
   s.email    = "kyle@kylemaxwell.com"
   s.homepage = "http://github.com/fizx/robots"

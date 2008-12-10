@@ -9,6 +9,7 @@ class Robots
     include Loggable
     
     def initialize(uri)
+      @last_accessed = Time.at(1)
       io = open(URI.join(uri.to_s, "/robots.txt")) rescue nil
       if !io || io.content_type != "text/plain" || io.status != ["200", "OK"]
         io = StringIO.new("User-agent: *\nAllow: /\n")
@@ -17,10 +18,13 @@ class Robots
       @other = {}
       @disallows = {}
       @allows = {}
+      @delays = {}
       agent = ""
       io.each do |line|
         next if line =~ /^\s*(#.*|$)/
-        key, value = line.split(":")
+        arr = line.split(":")
+        key = arr.shift
+        value = arr.join(":").strip
         value.strip!
         case key
         when "User-agent":
@@ -31,9 +35,10 @@ class Robots
         when "Disallow":
           @disallows[agent] ||= []
           @disallows[agent] << to_regex(value)
+        when "Crawl-delay"
+          @delays[agent] = value.to_i
         else
-          @disallows[agent] ||= []
-          @disallows[agent] << to_regex(value)
+          @other[key] = value
         end
       end
       
@@ -58,21 +63,26 @@ class Robots
         end
       end
       
-      return true if allowed
-      
       @allows.each do |key, value|
-        if user_agent =~ key
-          debug "matched #{key.inspect}"
-          value.each do |rule|
-            if path =~ rule
-              debug "matched Allow: #{rule.inspect}"
-              return true 
+        unless allowed      
+          if user_agent =~ key
+            debug "matched #{key.inspect}"
+            value.each do |rule|
+              if path =~ rule
+                debug "matched Allow: #{rule.inspect}"
+                allowed = true
+              end
             end
           end
         end
       end
       
-      return false
+      if allowed && @delays[user_agent]
+        sleep @delays[user_agent] - (Time.now - @last_accessed)
+        @last_accessed = Time.now
+      end
+      
+      return allowed
     end
     
     def other_values

@@ -33,4 +33,9 @@ class TestRobots < Test::Unit::TestCase
   def test_site_with_disallowed
     assert @robots.allowed?("http://www.google.com/")
   end
+  
+  def test_other_values
+    sitemap = {"Sitemap" => "http://www.eventbrite.com/sitemap_index.xml"}
+    assert_equal(sitemap, @robots.other_values("http://eventbrite.com"))
+  end
 end
