@@ -18,8 +18,7 @@ class Robots
       @other = {}
       @disallows = {}
       @allows = {}
-      @delays = {}
-      agent = ""
+      agent = /.*/
       io.each do |line|
         next if line =~ /^\s*(#.*|$)/
         arr = line.split(":")

@@ -1,6 +1,8 @@
 0.4.0 
   - Fixed other_values bug
   - added crawl-delay support
+0.3.2
+	- fixed breaking on reddit.com
 0.3.1
   - fixed bug in disallows handling
   - partially mocked out open-uri
