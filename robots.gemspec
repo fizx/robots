@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name     = "fizx-robots"
+  s.name     = "robots"
   s.version  = "0.4.0"
   s.date     = "2008-12-10"
   s.summary  = "Simple robots.txt parser"
