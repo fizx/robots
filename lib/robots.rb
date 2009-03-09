@@ -18,6 +18,7 @@ class Robots
       @other = {}
       @disallows = {}
       @allows = {}
+      @delays = {} # added delays to make it work
       agent = /.*/
       io.each do |line|
         next if line =~ /^\s*(#.*|$)/
