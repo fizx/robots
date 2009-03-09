@@ -1,12 +1,10 @@
 require "open-uri"
 require "uri"
 require "rubygems"
-require "loggable"
+
 class Robots
-  include Loggable
   
   class ParsedRobots
-    include Loggable
     
     def initialize(uri)
       @last_accessed = Time.at(1)
@@ -49,14 +47,11 @@ class Robots
       return true unless @parsed
       allowed = true
       path = uri.request_uri
-      debug "path: #{path}"
       
       @disallows.each do |key, value|
         if user_agent =~ key
-          debug "matched #{key.inspect}"
           value.each do |rule|
             if path =~ rule
-              debug "matched Disallow: #{rule.inspect}"
               allowed = false
             end
           end
@@ -66,10 +61,8 @@ class Robots
       @allows.each do |key, value|
         unless allowed      
           if user_agent =~ key
-            debug "matched #{key.inspect}"
             value.each do |rule|
               if path =~ rule
-                debug "matched Allow: #{rule.inspect}"
                 allowed = true
               end
             end
