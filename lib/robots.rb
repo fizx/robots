@@ -1,14 +1,27 @@
 require "open-uri"
 require "uri"
 require "rubygems"
+require "timeout"
 
 class Robots
   
+  DEFAULT_TIMEOUT = 3
+  
   class ParsedRobots
     
-    def initialize(uri)
+    def initialize(uri, user_agent)
       @last_accessed = Time.at(1)
-      io = open(URI.join(uri.to_s, "/robots.txt")) rescue nil
+      
+      io = nil
+      begin
+        Timeout::timeout(Robots.timeout) do
+          io = URI.join(uri.to_s, "/robots.txt").open("User-Agent" => user_agent) rescue nil
+        end 
+      rescue Timeout::Error
+        STDERR.puts "robots.txt request timed out"
+      end
+        
+      
       if !io || io.content_type != "text/plain" || io.status != ["200", "OK"]
         io = StringIO.new("User-agent: *\nAllow: /\n")
       end
@@ -91,6 +104,14 @@ class Robots
     end
   end
   
+  def self.timeout=(t)
+    @timeout = t
+  end
+  
+  def self.timeout
+    @timeout || DEFAULT_TIMEOUT
+  end
+  
   def initialize(user_agent)
     @user_agent = user_agent
     @parsed = {}
@@ -99,14 +120,14 @@ class Robots
   def allowed?(uri)
     uri = URI.parse(uri.to_s) unless uri.is_a?(URI)
     host = uri.host
-    @parsed[host] ||= ParsedRobots.new(uri)
+    @parsed[host] ||= ParsedRobots.new(uri, @user_agent)
     @parsed[host].allowed?(uri, @user_agent)
   end
   
   def other_values(uri)
     uri = URI.parse(uri.to_s) unless uri.is_a?(URI)
     host = uri.host
-    @parsed[host] ||= ParsedRobots.new(uri)
+    @parsed[host] ||= ParsedRobots.new(uri, @user_agent)
     @parsed[host].other_values
   end
 end
