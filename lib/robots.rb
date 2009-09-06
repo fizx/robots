@@ -38,12 +38,12 @@ class Robots
         value = arr.join(":").strip
         value.strip!
         case key
-        when "User-agent":
+        when "User-agent"
           agent = to_regex(value)
-        when "Allow":
+        when "Allow"
           @allows[agent] ||= []
           @allows[agent] << to_regex(value)
-        when "Disallow":
+        when "Disallow"
           @disallows[agent] ||= []
           @disallows[agent] << to_regex(value)
         when "Crawl-delay"
