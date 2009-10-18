@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
      "CHANGELOG",
      "README",
      "Rakefile",
+     "VERSION",
      "lib/robots.rb",
      "robots.gemspec",
      "test/fixtures/robots1.txt",
