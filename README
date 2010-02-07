@@ -9,7 +9,7 @@ Usage:
 	
 If you want caching, you're on your own.  I suggest marshalling an instance of the parser.  
 
-Copyright (c) 2008 Kyle Maxwell
+Copyright (c) 2008 Kyle Maxwell, contributors
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
