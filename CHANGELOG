@@ -1,3 +1,5 @@
+0.8.0
+  - Add multiple values from robots.txt (via joost)
 0.7.3
   - Move to jeweler, gemcutter
 0.7.2

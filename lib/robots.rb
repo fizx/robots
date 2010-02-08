@@ -49,7 +49,8 @@ class Robots
         when "Crawl-delay"
           @delays[agent] = value.to_i
         else
-          @other[key] = value
+          @other[key] ||= []
+          @other[key] << value
         end
       end
       
