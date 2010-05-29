@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{robots}
-  s.version = "0.8.0"
+  s.version = "0.9.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kyle Maxwell"]
-  s.date = %q{2010-02-08}
+  s.date = %q{2010-05-29}
   s.description = %q{It parses robots.txt files}
   s.email = %q{kyle@kylemaxwell.com}
   s.extra_rdoc_files = [
@@ -23,13 +23,17 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/robots.rb",
      "robots.gemspec",
-     "test/fixtures/robots1.txt",
+     "test/fixtures/emptyish.txt",
+     "test/fixtures/eventbrite.txt",
+     "test/fixtures/google.txt",
+     "test/fixtures/reddit.txt",
+     "test/fixtures/yelp.txt",
      "test/test_robots.rb"
   ]
   s.homepage = %q{http://github.com/fizx/robots}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Simple robots.txt parser}
   s.test_files = [
     "test/test_robots.rb"
