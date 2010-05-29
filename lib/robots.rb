@@ -12,15 +12,7 @@ class Robots
     def initialize(uri, user_agent)
       @last_accessed = Time.at(1)
       
-      io = nil
-      begin
-        Timeout::timeout(Robots.timeout) do
-          io = URI.join(uri.to_s, "/robots.txt").open("User-Agent" => user_agent) rescue nil
-        end 
-      rescue Timeout::Error
-        STDERR.puts "robots.txt request timed out"
-      end
-        
+      io = Robots.get_robots_txt(uri)
       
       if !io || io.content_type != "text/plain" || io.status != ["200", "OK"]
         io = StringIO.new("User-agent: *\nAllow: /\n")
@@ -99,9 +91,20 @@ class Robots
   protected
     
     def to_regex(pattern)
+      return /should-not-match-anything-123456789/ if pattern.strip.empty?
       pattern = Regexp.escape(pattern)
       pattern.gsub!(Regexp.escape("*"), ".*")
       Regexp.compile("^#{pattern}")
+    end
+  end
+  
+  def self.get_robots_txt(uri)
+    begin
+      Timeout::timeout(Robots.timeout) do
+        io = URI.join(uri.to_s, "/robots.txt").open("User-Agent" => user_agent) rescue nil
+      end 
+    rescue Timeout::Error
+      STDERR.puts "robots.txt request timed out"
     end
   end
   

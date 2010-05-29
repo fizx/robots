@@ -1,3 +1,6 @@
+0.9.0
+  - Fix http://github.com/fizx/robots/issues#issue/1
+  - Tests don't rely on network.
 0.8.0
   - Add multiple values from robots.txt (via joost)
 0.7.3
