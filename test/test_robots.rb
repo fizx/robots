@@ -14,7 +14,7 @@ end
 
 class TestRobots < Test::Unit::TestCase
   def setup
-    def Robots.get_robots_txt(uri)
+    def Robots.get_robots_txt(uri, user_agent)
       fixture_file = File.dirname(__FILE__) + "/fixtures/" + uri.host.split(".")[-2] + ".txt"
       File.open(fixture_file).extend(FakeHttp)
     end
@@ -23,7 +23,7 @@ class TestRobots < Test::Unit::TestCase
   end
   
   def test_allowed_if_no_robots
-    def Robots.get_robots_txt(uri)
+    def Robots.get_robots_txt(uri, user_agent)
       return nil
     end
     
