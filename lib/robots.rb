@@ -12,7 +12,7 @@ class Robots
     def initialize(uri, user_agent)
       @last_accessed = Time.at(1)
       
-      io = Robots.get_robots_txt(uri)
+      io = Robots.get_robots_txt(uri, user_agent)
       
       if !io || io.content_type != "text/plain" || io.status != ["200", "OK"]
         io = StringIO.new("User-agent: *\nAllow: /\n")
@@ -98,7 +98,7 @@ class Robots
     end
   end
   
-  def self.get_robots_txt(uri)
+  def self.get_robots_txt(uri, user_agent)
     begin
       Timeout::timeout(Robots.timeout) do
         io = URI.join(uri.to_s, "/robots.txt").open("User-Agent" => user_agent) rescue nil
